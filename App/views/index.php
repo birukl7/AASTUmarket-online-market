@@ -1,8 +1,9 @@
 <?php
+session_start();
 require 'db.php';
+
 $sql = "SELECT * FROM products";
 $result = $conn->query($sql);
-?>
 ?>
 
 <html lang="en">
@@ -196,7 +197,7 @@ $result = $conn->query($sql);
   <body>
 
       <!-- Main page header -->
-    <header class="header">
+    <header class="header ">
       <div class="logo">
         <img src="../../Resources/images/logo-dark.png" alt="Logo" />
       </div>
@@ -205,10 +206,10 @@ $result = $conn->query($sql);
       <nav class="menu ">
         <ul>
           <li><a href="./index.php">Home</a></li>
-          <li><a href="./about.html">About</a></li>
+          <li><a href="./about.php">About</a></li>
           <li><a href="./products.php">Products</a></li>
-          <li><a href="./blogs.html">Blogs</a></li>
-          <li><a href="./contact.html">Contact</a></li>
+          <li><a href="./blogs.php">Blogs</a></li>
+          <li><a href="./contact.php">Contact</a></li>
 
 
 
@@ -219,7 +220,7 @@ $result = $conn->query($sql);
       <!-- conditional rendering based on user status -->
       <?php
       // Check if the user is logged in
-      if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+      if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) {
           // Display content for logged-in users
           echo '<div class="buttons">
           <a href="logout.php" class="p-3 bg-black text-white rounded-lg hover:bg-[#e0e0e0] hover:outline hover:outline-1 hover:text-black transition-all duration-300 cursor-pointer">Log Out <i class="fa-solid fa-arrow-right-from-bracket fa-rotate-180 ml-3"></i></a>
@@ -244,11 +245,14 @@ $result = $conn->query($sql);
         </div>';
       } else {
           // Display content for non-registered users
+          if(isset($_SESSION['loggedin'])){
+            echo $_SESSION['loggedin'];
+          }
           
-          echo '<div class="flex gap-3 flex-row">
+          echo '<ul class="flex gap-3 flex-row">
                   <li><a href="signup.php" class="p-3 bg-black text-white rounded-lg hover:bg-[#e0e0e0] hover:outline hover:outline-1 hover:text-black transition-all duration-300 cursor-pointer">Signup</a></li>
                   <li><a href="login.php" class="p-3 hover:bg-black hover:text-white rounded-lg bg-[#e0e0e0] outline outline-1 text-black transition-all duration-300 cursor-pointer">Login</a></li>
-                </div>';
+                </ul>';
       }
       ?> 
         
@@ -277,15 +281,16 @@ $result = $conn->query($sql);
                 <h1>Discover the tools you need to thrive in the classroom and beyond</h1>
                 <p class="hero-p">Shop with confidence knowing you're getting the best quality products. And Everything you need to succeed, delivered to your dorm doorstep.</p>
                 <div class="hero-btn-div">
-                    <a href="#" class="btn">Shop Now</a>
+                    <a href="./products.php" class="btn">Shop Now</a>
 
 
                     <!-- conditional rendering based on user status-->
                     <?php
+                    
                     // Check if the user is logged in
                     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                         // Display content for logged-in users
-                        echo '<a href="#" class="p-3 rounded-full outline outline-1 px-12 hover:px-16 transition-all duration-300">LogIn</a>';
+                        echo '<a href="./contact.html" class="p-3 rounded-full outline outline-1 px-12 hover:px-16 transition-all duration-300">Contact</a>';
                     } else {
                         // Display content for non-registered users
                         echo '<a href="#" class="p-3 rounded-full outline outline-1 px-12 hover:px-16 transition-all duration-300">Signup</a>';
@@ -409,7 +414,7 @@ $result = $conn->query($sql);
                 <h1>Let's tell you somethings about us</h1>
                 <p class="hero-p">At AASTU, our aim was to enhance student life. We developed a secure, user-friendly ecommerce platform for easy access to university essentials like merchandise, textbooks, and event tickets. Our website fosters a thriving campus community while showcasing the synergy between technology and education. Explore our creation and experience the seamless blend of convenience and innovation!</p>
                 <div class="hero-btn-div">
-                    <a href="#" class="btn">About us</a>
+                    <a href="./contact.html" class="btn">About us</a>
                 </div>
             </div>
         </section>

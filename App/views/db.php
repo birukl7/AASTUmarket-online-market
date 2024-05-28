@@ -5,6 +5,9 @@ $username = "root"; // MySQL username
 $password = ""; // MySQL password
 $database = "aastumarket"; // MySQL database name
 
+
+
+
 // Create connection
 $conn = new mysqli($host, $username, $password, $database);
 

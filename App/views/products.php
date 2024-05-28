@@ -199,53 +199,51 @@ require 'db.php';
         <!-- NavBar -->
         <nav class="menu ">
           <ul>
-            <li><a href="./index.html">Home</a></li>
-            <li><a href="./about.html">About</a></li>
-            <li><a href="./products.html">Products</a></li>
-            <li><a href="./blogs.html">Blogs</a></li>
-            <li><a href="./contact.html">Contact</a></li>
-  
-  
-  
+            <li><a href="./index.php">Home</a></li>
+            <li><a href="./about.php">About</a></li>
+            <li><a href="./products.php">Products</a></li>
+            <li><a href="./blogs.php">Blogs</a></li>
+            <li><a href="./contact.php">Contact</a></li>
+            
           </ul>
         </nav>
   
   
-        <!-- conditional rendering based on user status -->
-        <?php
-        // Check if the user is logged in
-        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-            // Display content for logged-in users
-            echo '<div class="buttons">
-            <a href="logout.php" class="p-3 bg-black text-white rounded-lg hover:bg-[#e0e0e0] hover:outline hover:outline-1 hover:text-black transition-all duration-300 cursor-pointer">Log Out <i class="fa-solid fa-arrow-right-from-bracket fa-rotate-180 ml-3"></i></a>
-            <div class="icon-cart">
-              <svg
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 18 20"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 15a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0h8m-8 0-1-4m9 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-9-4h10l2-7H3m2 7L3 4m0 0-.792-3H1"
-                />
-              </svg>
-              <span>0</span>
-            </div>
-            
-          </div>';
-        } else {
-            // Display content for non-registered users
-            
-            echo '<div class="flex gap-3 flex-row">
-                    <li><a href="signup.php" class="p-3 bg-black text-white rounded-lg hover:bg-[#e0e0e0] hover:outline hover:outline-1 hover:text-black transition-all duration-300 cursor-pointer">Signup</a></li>
-                    <li><a href="login.php" class="p-3 hover:bg-black hover:text-white rounded-lg bg-[#e0e0e0] outline outline-1 text-black transition-all duration-300 cursor-pointer">Login</a></li>
-                  </div>';
-        }
-        ?> 
+          <!-- conditional rendering based on user status -->
+          <?php
+          // Check if the user is logged in
+          if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+              // Display content for logged-in users
+              echo '<div class="buttons">
+              <a href="logout.php" class="p-3 bg-black text-white rounded-lg hover:bg-[#e0e0e0] hover:outline hover:outline-1 hover:text-black transition-all duration-300 cursor-pointer">Log Out <i class="fa-solid fa-arrow-right-from-bracket fa-rotate-180 ml-3"></i></a>
+              <div class="icon-cart">
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 18 20"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 15a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0h8m-8 0-1-4m9 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-9-4h10l2-7H3m2 7L3 4m0 0-.792-3H1"
+                  />
+                </svg>
+                <span>0</span>
+              </div>
+              
+            </div>';
+          } else {
+              // Display content for non-registered users
+              
+              echo '<ul class="flex gap-3 flex-row">
+                      <li class=" list-none"><a href="signup.php" class="p-3 bg-black text-white rounded-lg hover:bg-[#e0e0e0] hover:outline hover:outline-1 hover:text-black transition-all duration-300 cursor-pointer">Signup</a></li>
+                      <li class="list-none"><a href="login.php" class="p-3 hover:bg-black hover:text-white rounded-lg bg-[#e0e0e0] outline outline-1 text-black transition-all duration-300 cursor-pointer">Login</a></li>
+                    </ul>';
+          }
+          ?> 
           
           <!-- Hamburger menu for mobiles -->
           <div class="hamburger-menu">
@@ -295,9 +293,7 @@ require 'db.php';
                     <?php } ?>
                 </div>
         </div>
-        <footer>
-            <p>Copyright @ AASTU ONLINE MARKET, All Rights reserved</p>
-        </footer>
+
 
     </body>
 </html>
