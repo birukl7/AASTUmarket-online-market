@@ -142,8 +142,8 @@ $product = $result->fetch_assoc();
 
 
       <!-- conditional rendering based on user status -->
+      <!-- conditional rendering based on user status -->
       <?php
-        echo($_SESSION['loggedin']);
         // Check if the user is logged in
         if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
             // Display content for logged-in users
@@ -178,7 +178,7 @@ $product = $result->fetch_assoc();
                     <li><a href="./login.php" class="p-3 hover:bg-black hover:text-white rounded-lg bg-[#e0e0e0] outline outline-1 text-black transition-all duration-300 cursor-pointer">Login</a></li>
                   </ul>';
         }
-        ?>
+      ?>
 
         
         <!-- Hamburger menu for mobiles -->

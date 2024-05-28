@@ -23,6 +23,7 @@ $sql = "SELECT * FROM products WHERE id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $id);
 $stmt->execute();
+
 $result = $stmt->get_result();
 
 if ($result->num_rows === 0) {
@@ -58,12 +59,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+  <link rel="stylesheet" type="text/css" href="../../Resources/css/output.css">
+
   <title>Edit Product</title>
 </head>
 <body>
   <div class="container mx-auto p-6">
     <h1 class="text-2xl font-bold mb-4">Edit Product</h1>
-    <form action="" method="POST" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
+    <form action="" method="POST" class="max-w-lg mx-auto abg-white p-6 rounded-lg shadow-md">
       <div class="mb-4">
         <label for="name" class="block text-gray-700">Name</label>
         <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($product['name']); ?>" class="w-full p-2 border border-gray-300 rounded mt-1" required>

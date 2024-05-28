@@ -17,6 +17,10 @@ function validatePassword($password) {
     return preg_match('/^.{8,}$/', $password);
 }
 
+function validateName($name){
+    return preg_match('/^[A-Za-z]+$/', $name);
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Sanitize input
     $first_name = sanitizeInput($_POST['first_name']);
@@ -29,15 +33,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validate inputs
     if (empty($first_name)) {
-        $errors['first_name'] = 'First name is required';
+        $errors['first_name'] = 'First name is required.';
     }
 
     if (empty($last_name)) {
-        $errors['last_name'] = 'Last name is required';
+        $errors['last_name'] = 'Last name is required.';
     }
 
     if (empty($email) || !validateEmail($email)) {
-        $errors['email'] = 'Invalid email address';
+        $errors['email'] = 'Invalid email address.';
+    }
+
+    if (!validateName($first_name)){
+        $errors['first_name'] = 'First name is invalid.';
+    }
+
+    if (!validateName($last_name)){
+        $errors['last_name'] = 'Last name is invalid.';
     }
 
     if (empty($password) || !validatePassword($password)) {
@@ -51,7 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sql->bind_param("ssss", $first_name, $last_name, $email, $password_hashed);
         if ($sql->execute()) {
             $_SESSION['loggedin'] = true;
-            $_SESSION['username'] = $first_name; // Store the first name in session
+            setcookie('username',$row['first_name'], time()+(86400), '/');
+             // Store the first name in session
             header('Location: index.php');
             exit;
         } else {

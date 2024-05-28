@@ -437,40 +437,44 @@
   </nav>
   <div class="buttons">
 
-        <?php
+      <!-- conditional rendering based on user status -->
+      <?php
+       
         // Check if the user is logged in
         if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
             // Display content for logged-in users
             echo '<div class="buttons">
             <a href="logout.php" class="p-3 bg-black text-white rounded-lg hover:bg-[#e0e0e0] hover:outline hover:outline-1 hover:text-black transition-all duration-300 cursor-pointer">Log Out <i class="fa-solid fa-arrow-right-from-bracket fa-rotate-180 ml-3"></i></a>
-            <div class="icon-cart">
-              <svg
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 18 20"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 15a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0h8m-8 0-1-4m9 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-9-4h10l2-7H3m2 7L3 4m0 0-.792-3H1"
-                />
-              </svg>
-              <span>0</span>
-            </div>
-            
+
+            <a href="./cart.php" class=" flex flex-col items-center gap-y-3">
+              <div class="icon-cart">
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 18 20"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 15a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0h8m-8 0-1-4m9 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-9-4h10l2-7H3m2 7L3 4m0 0-.792-3H1"
+                  />
+                </svg>
+                <span id="cart-count">0</span>
+              </div>
+            </a>
+
           </div>';
         } else {
             // Display content for non-registered users
-            
             echo '<ul class="flex gap-3 flex-row">
-                    <li class=" list-none"><a href="signup.php" class="p-3 bg-black text-white rounded-lg hover:bg-[#e0e0e0] hover:outline hover:outline-1 hover:text-black transition-all duration-300 cursor-pointer">Signup</a></li>
-                    <li class="list-none"><a href="login.php" class="p-3 hover:bg-black hover:text-white rounded-lg bg-[#e0e0e0] outline outline-1 text-black transition-all duration-300 cursor-pointer">Login</a></li>
+                    <li><a href="./signup.php" class="p-3 bg-black text-white rounded-lg hover:bg-[#e0e0e0] hover:outline hover:outline-1 hover:text-black transition-all duration-300 cursor-pointer">Signup</a></li>
+                    <li><a href="./login.php" class="p-3 hover:bg-black hover:text-white rounded-lg bg-[#e0e0e0] outline outline-1 text-black transition-all duration-300 cursor-pointer">Login</a></li>
                   </ul>';
         }
-        ?> 
+      ?>
 
 
         
@@ -623,5 +627,20 @@
             
         </script>
         
+
+        <script>
+          document.addEventListener('DOMContentLoaded', (event)  => {
+              updateCartCount();
+            });
+
+            function updateCartCount() {
+              // Get the cart from localStorage
+              let cart = JSON.parse(localStorage.getItem('cart')) || [];
+              // Update the cart count span
+              document.getElementById('cart-count').textContent = cart.length;
+            }
+        </script>
+
+
     </body>
 </html>

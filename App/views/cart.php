@@ -435,47 +435,45 @@
     </nav>
     <div class="buttons">
 
-          <?php
-          // Check if the user is logged in
-          if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-              // Display content for logged-in users
-              echo '<div class="buttons">
-              <a href="logout.php" class="p-3 bg-black text-white rounded-lg hover:bg-[#e0e0e0] hover:outline hover:outline-1 hover:text-black transition-all duration-300 cursor-pointer">Log Out <i class="fa-solid fa-arrow-right-from-bracket fa-rotate-180 ml-3"></i></a>
+      <!-- conditional rendering based on user status -->
+      <?php
+        echo($_SESSION['loggedin']);
+        // Check if the user is logged in
+        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+            // Display content for logged-in users
+            echo '<div class="buttons">
+            <a href="logout.php" class="p-3 bg-black text-white rounded-lg hover:bg-[#e0e0e0] hover:outline hover:outline-1 hover:text-black transition-all duration-300 cursor-pointer">Log Out <i class="fa-solid fa-arrow-right-from-bracket fa-rotate-180 ml-3"></i></a>
 
+            <a href="./cart.php" class=" flex flex-col items-center gap-y-3">
+              <div class="icon-cart">
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 18 20"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 15a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0h8m-8 0-1-4m9 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-9-4h10l2-7H3m2 7L3 4m0 0-.792-3H1"
+                  />
+                </svg>
+                <span id="cart-count">0</span>
+              </div>
+            </a>
 
-              <a href="./cart.php">
-                <div class="icon-cart">
-                  <svg
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 18 20"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M6 15a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0h8m-8 0-1-4m9 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-9-4h10l2-7H3m2 7L3 4m0 0-.792-3H1"
-                    />
-                  </svg>
-                  <span>0</span>
-                </div>
-              </a>
-              
-            </div>';
-          } else {
-              // Display content for non-registered users
-              
-              echo '<ul class="flex gap-3 flex-row">
-                      <li class=" list-none"><a href="signup.php" class="p-3 bg-black text-white rounded-lg hover:bg-[#e0e0e0] hover:outline hover:outline-1 hover:text-black transition-all duration-300 cursor-pointer">Signup</a></li>
-                      <li class="list-none"><a href="login.php" class="p-3 hover:bg-black hover:text-white rounded-lg bg-[#e0e0e0] outline outline-1 text-black transition-all duration-300 cursor-pointer">Login</a></li>
-                    </ul>';
-          }
-          ?> 
+          </div>';
+        } else {
+            // Display content for non-registered users
+            echo '<ul class="flex gap-3 flex-row">
+                    <li><a href="./signup.php" class="p-3 bg-black text-white rounded-lg hover:bg-[#e0e0e0] hover:outline hover:outline-1 hover:text-black transition-all duration-300 cursor-pointer">Signup</a></li>
+                    <li><a href="./login.php" class="p-3 hover:bg-black hover:text-white rounded-lg bg-[#e0e0e0] outline outline-1 text-black transition-all duration-300 cursor-pointer">Login</a></li>
+                  </ul>';
+        }
+      ?>
 
-
-          
         </div>
       <div class="hamburger-menu">
         <div class="bar"></div>
@@ -485,8 +483,73 @@
     </div>
   </header>
   
+  <main class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold mb-6">Your Cart</h1>
+    <div id="cart-items" class="grid grid-cols-1 gap-4">
+      <!-- Cart items will be dynamically inserted here -->
+    </div>
+  </main>
 
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      updateCartCount();
+      displayCartItems();
+    });
 
+    function updateCartCount() {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      document.getElementById('cart-count').textContent = cart.length;
+    }
 
+    function displayCartItems() {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      let cartItemsContainer = document.getElementById('cart-items');
+
+      cartItemsContainer.innerHTML = '';
+
+      cart.forEach((product, index) => {
+        let productItem = document.createElement('div');
+        productItem.className = 'flex items-center justify-between bg-gray-200 p-4 rounded-lg shadow-md';
+        productItem.innerHTML = `
+          <div class="flex items-center">
+            <img src="${product.image}" alt="${product.name}" class="w-16 h-16 object-cover rounded-lg mr-4" style="width: 150px; height: 150px; padding: 0 10px 0 0;">
+            <div>
+              <h2 class="text-xl font-semibold">${product.name}</h2>
+              <p class="text-gray-700">${product.price} Birr</p>
+            </div>
+          </div>
+          <button class="remove-btn bg-red-500 text-white px-4 py-2 rounded-lg" data-index="${index}">Remove</button>
+        `;
+        cartItemsContainer.appendChild(productItem);
+      });
+
+      // Attach event listeners to remove buttons
+      document.querySelectorAll('.remove-btn').forEach(button => {
+        button.addEventListener('click', removeItem);
+      });
+    }
+
+    function removeItem(event) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      let index = event.target.getAttribute('data-index');
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartCount();
+      displayCartItems();
+    }
+  </script>
+
+  <script>
+      document.addEventListener('DOMContentLoaded', (event)  => {
+          updateCartCount();
+        });
+
+        function updateCartCount() {
+          // Get the cart from localStorage
+          let cart = JSON.parse(localStorage.getItem('cart')) || [];
+          // Update the cart count span
+          document.getElementById('cart-count').textContent = cart.length;
+        }
+    </script>
 </body>
 </html>

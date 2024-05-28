@@ -22,7 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $row = $result->fetch_assoc();
             if (password_verify($password, $row['password'])) {
                 $_SESSION['admin_loggedin'] = true;
-                $_SESSION['admin_username'] = $row['name'];
+                setcookie('admin_username',$row['name'], time()+(86400), '/');
+              
                 header('Location: admin_dashboard.php'); // Redirect to admin dashboard
                 exit;
             } else {

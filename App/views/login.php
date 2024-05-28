@@ -20,6 +20,8 @@ function validatePassword($password) {
     return preg_match('/^.{8,}$/', $password);
 }
 
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Sanitize and validate email
     $email = sanitizeInput($_POST['email']);
@@ -39,7 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $row = $result->fetch_assoc();
                 if (password_verify($password, $row['password'])) {
                     $_SESSION['loggedin'] = true;
-                    $_SESSION['username'] = $row['first_name'];
+                    
+                    setcookie('username',$row['first_name'], time()+(86400), '/');
                     header('Location: index.php'); // Redirect to the home page after successful login
                     exit;
                 } else {

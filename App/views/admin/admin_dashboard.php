@@ -121,6 +121,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php if (isset($success_message)): ?>
         <p class="text-green-500"><?php echo $success_message; ?></p>
     <?php endif; ?>
+
+    
     <form action="" method="POST" enctype="multipart/form-data" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
         <div class="mb-4">
             <label for="name" class="block text-gray-700">Name</label>
