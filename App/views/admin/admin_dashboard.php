@@ -71,7 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <div class=" w-screen flex items-center justify-center">
     <div class="bg-white p-8 rounded shadow-lg w-96">
       <h1 class="text-2xl font-thin text-center mb-6">Admin Dashboard</h1>
-      <p class="text-center">Welcome, <?php echo $_SESSION['admin_username']; ?>!</p>
       <div class="mt-6 text-center">
         <a href="admin_logout.php" class="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded">Logout</a>
       </div>
